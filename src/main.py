@@ -1,10 +1,11 @@
 import logging
 import os
-
+import pyfiglet
+from colorama import Fore, Style
 from datetime import datetime
 from dotenv import load_dotenv
 
-from im_server import quote_server
+from imserver import im_server
 from definitions import LOGS_DIR, ROOT_DIR
 
 dotenv_path = os.path.join(ROOT_DIR, '.env')
@@ -27,8 +28,11 @@ def _load_logger() -> None:
 
 
 def main():
+    print(Fore.GREEN)
+    print(pyfiglet.figlet_format( "imgen" ))
+    print(Style.RESET_ALL)
     _load_logger()
-    quote_server.init()
+    im_server.init()
 
 if __name__ == '__main__':
     main()

@@ -1,18 +1,16 @@
 import logging
-import pathlib
-import requests
+import os
 
 from dataclasses import dataclass
-import os
 from typing import Dict, Tuple
 from PIL.Image import Image
 
 from result import Result, Ok, Err, Some
-from definitions import TEMP_DIR, EXT_API_SAVE_QUOTE_URL, EXT_API_OUTPUT_URL
+from definitions import TEMP_DIR, EXT_API_OUTPUT_URL
 from imgen.imgen import ImGen
 from imgen.imgen_utils import ImGenUtils
 from models.im_request import ImRequest
-from quote_im.qt_im_utils import QuoteImUtils
+from imquote.qt_im_utils import QuoteImUtils
 
 
 _logger = logging.getLogger(__name__)
@@ -24,8 +22,17 @@ class GetQuoteIm:
     req_dict: Dict
     im_req: ImRequest
     
-    def __init__(self, req_dict: Dict ) -> None:
+    def __init__(self, req_dict: Dict = None ) -> None:
         self.req_dict = req_dict
+
+
+    def create_from_quote_id( self, quote_id: str ):
+
+        #request pra localhost:3030
+        # parse to ImReq model
+        # coloca no self im_req
+        # retorna o create_save
+        pass
 
 
     def create_and_save( self ) -> Result[Tuple[str, str, ImRequest], Exception]:

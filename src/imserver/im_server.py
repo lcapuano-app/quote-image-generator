@@ -1,13 +1,16 @@
 
 import logging
-import socketserver
 
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from typing import Any,Tuple
+from colorama import Fore, Style
 from bson.objectid import ObjectId
 
+from socketserver import ThreadingMixIn, TCPServer
+
+
 from definitions import HOST, PORT
-from im_server import req_handler
+from imserver import req_handler
 from result import Result, Ok, Err, Some
 
 
@@ -17,9 +20,9 @@ _logger = logging.getLogger(__name__)
 class _QuoteServerHandler ( SimpleHTTPRequestHandler ):
 
 
-    def do_GET( self ):
+    def do_GET( self ) -> None:
 
-        def is_mongo_id():
+        def is_mongo_id() -> bool:
             oid = self.path.strip('/')
             try:
                 ObjectId(oid)
@@ -33,12 +36,13 @@ class _QuoteServerHandler ( SimpleHTTPRequestHandler ):
             self.end_headers()
             help_json_str: str = req_handler.get_help_json().unwrap_or(r"{}")
             self.wfile.write(bytes(help_json_str, 'utf-8'))
+            return
 
         elif is_mongo_id():
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            help_json_str: str = r'{"foo": "bar"}'
+            help_json_str: str = r'{"comming": "soon"}'
             self.wfile.write(bytes(help_json_str, 'utf-8'))
 
         else:
@@ -52,13 +56,7 @@ class _QuoteServerHandler ( SimpleHTTPRequestHandler ):
 
 
 
-    def do_POST( self ):
-
-
-        print(f'{self.path=}')
-        tt = self.path.strip('/')
-        print('path', tt)
-        
+    def do_POST( self ) -> None:
 
         match req_handler.create_quote_img( self ):
 
@@ -88,20 +86,23 @@ class _QuoteServerHandler ( SimpleHTTPRequestHandler ):
         _logger.info( req_log )
         
 
-def init():
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle requests in a separate thread."""
+    
+
+def init() -> None:
 
     server_addr: Tuple[str, int] = ( HOST, PORT )
-    quote_server = HTTPServer( server_addr, _QuoteServerHandler )
+    #quote_server = HTTPServer( server_addr, _QuoteServerHandler )
+    quote_server = ThreadedHTTPServer(server_addr, _QuoteServerHandler)
 
-    print(f'Starting: {HOST}:{PORT}')
     try:
         #solution for `OSError: [Errno 98] Address already in use`
-        socketserver.TCPServer.allow_reuse_address = True  
-
+        TCPServer.allow_reuse_address = True  
+        print(f'{Fore.CYAN}Started: {HOST}:{PORT}{Style.RESET_ALL}')
         quote_server.serve_forever()
-
     except KeyboardInterrupt:
-        print('Stoped by "Ctrl+C"')
+        print(f'{Fore.YELLOW}Stoped by "Ctrl+C"{Style.RESET_ALL}')
 
     finally:
         quote_server.server_close()

@@ -53,7 +53,6 @@ class ImGenUtils:
     def get_im_by_url( url: str, save_as: Tuple[str, str] = None ) -> Result[Image, Exception]:
         """ Loads an image from a given URL.
         :`save_as` (dir, filename). If is set saves the result to `dir/filename.ext`"""
-        print('URL')
         try:
             with urllib.request.urlopen(url) as im_file:
                 walker: Image = Im.open(im_file)

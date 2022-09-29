@@ -62,12 +62,13 @@ EXT_API_ASSETS_URL = f'{EXT_API_BASE_URL}/assets/'
 EXT_API_SAVE_QUOTE_URL = f'{EXT_API_BASE_URL}/save-quote.php'
 EXT_API_OUTPUT_URL = f'{EXT_API_BASE_URL}/output'
 
-###### ARRUMAR #####
 
+## DECOR
 DECOR_LINE_H_FACTOR: float = 0.0033
 DECOR_SIZE_MARGIN_FACTOR: int = 3
 DECOR_WALKER_FEET_PADDING_RATIO: float =  0.05 # walker feet is usually about it 
 
+## FONT GENERIC
 FONT_FACE: str = 'CursiveSerif-pj5Z.ttf'
 FONT_SIZE_FACTOR: float = 0.025
 FONT_SIZE: int = 18

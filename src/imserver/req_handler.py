@@ -3,12 +3,10 @@ import json
 import logging
 
 from http.server import SimpleHTTPRequestHandler
-from pprint import pp
 from typing import Dict, List, Tuple
 
 from result import Result, Ok, Err, Some
-from imgen.imgen import ImGen
-from quote_im.get_im import GetQuoteIm
+from imquote import GetQuoteIm
 from models.im_request import ImRequest
 
 
@@ -101,11 +99,3 @@ def parse_req_dict( some_dict: Dict ) -> ImRequest:
         im_req.errs = [err]
         return im_req 
 
-
-def img_from_post( im_req: ImRequest ):
-    match ImGen( im_req ).gen_quote():
-        case Ok( img):
-            print( 'PASSOU')
-            img.show()
-        case Err( err ):
-            print(err)

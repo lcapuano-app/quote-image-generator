@@ -6,11 +6,10 @@ import os
 from pathlib import Path
 from typing import Dict
 from PIL.Image import Image
-from PIL import Image as Im
 
 from result import Result, Ok, Err, Some
 from definitions import EXT_API_SAVE_QUOTE_URL, EXT_API_OUTPUT_URL
-from imgen.imgen import ImRequest
+from models import ImRequest
 
 
 _logger = logging.getLogger(__name__)
