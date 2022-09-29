@@ -13,6 +13,7 @@ WORKSPACE_DIR = os.path.dirname(ROOT_DIR)
 ASSETS_DIR = os.path.join(WORKSPACE_DIR, 'assets')
 FALLBACK_DIR = os.path.join(WORKSPACE_DIR, 'fallback')
 LOGS_DIR = os.path.join(WORKSPACE_DIR, 'logs')
+TEMP_DIR = os.path.join(WORKSPACE_DIR, 'temp')
 
 # Server
 HOST = 'localhost'
@@ -54,9 +55,14 @@ FONT_QUOTE_SCALE_FACTOR: float = 0.0275
 QUOTE_STROKE_SIZE: int = 1
 TEXT_MULTI_WRAP: int = 50
 
-###### ARRUMAR #####
 
-ASSETS_URL = 'https://lcapuano.app/valorant/bot/assets/'
+## EXT API
+EXT_API_BASE_URL = 'https://lcapuano.app/valorant/bot'
+EXT_API_ASSETS_URL = f'{EXT_API_BASE_URL}/assets/'
+EXT_API_SAVE_QUOTE_URL = f'{EXT_API_BASE_URL}/save-quote.php'
+EXT_API_OUTPUT_URL = f'{EXT_API_BASE_URL}/output'
+
+###### ARRUMAR #####
 
 DECOR_LINE_H_FACTOR: float = 0.0033
 DECOR_SIZE_MARGIN_FACTOR: int = 3

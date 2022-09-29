@@ -1,4 +1,5 @@
 import logging
+from pprint import pp
 
 from typing import Tuple
 from PIL.Image import Image
@@ -63,7 +64,7 @@ class ImGen:
     
     
     def bkg_create( self ) -> Result[Image, Exception]:
-        
+        pp(self.im_req)
         bkg_response = background.create( 
             size = self.im_req.im_size, 
             img_name = self.im_req.author.img_name,

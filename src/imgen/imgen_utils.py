@@ -7,7 +7,7 @@ from PIL import Image as Im
 from PIL.Image import Image
 
 from result import Result, Ok, Err
-from definitions import ASSETS_DIR, COLOR_TRANSPARENT, IM_WIDTH, IM_HEIGHT, IM_MODE, ASSETS_URL, FONT_QUOTE_SCALE_FACTOR
+from definitions import ASSETS_DIR, COLOR_TRANSPARENT, IM_WIDTH, IM_HEIGHT, IM_MODE, EXT_API_ASSETS_URL, FONT_QUOTE_SCALE_FACTOR
 
 
 _logger = logging.getLogger(__name__)
@@ -77,7 +77,7 @@ class ImGenUtils:
             :2. From a given url. If url is none it will get one using the default api url + filename
         """
         dirname = dirname if dirname is not None else ASSETS_DIR
-        url = url if url is not None else f'{ASSETS_URL}{filename}'
+        url = url if url is not None else f'{EXT_API_ASSETS_URL}{filename}'
        
         match ImGenUtils.get_im_by_dir( filename, dirname ):
             case Ok( img ): 
