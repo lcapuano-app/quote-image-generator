@@ -28,12 +28,12 @@ class ImReqOptions:
 
     @staticmethod
     def parser( some_dict: Dict ):
-       
+
         options = ImReqOptions()
 
         if not isinstance( some_dict, dict ):
             return options
-             
+
         for key in ImReqOptions.__annotations__:
 
             some_dict_value = some_dict.get(key)
@@ -47,7 +47,7 @@ class ImReqOptions:
                     some_dict_value = parse_utils.to_rgba( color=some_dict_value, default=COLOR_DECOR )
 
                 if type(some_dict_value) == ImReqOptions.__annotations__.get(key):
-                    setattr(options, key, some_dict_value )                    
+                    setattr(options, key, some_dict_value )
                 else:
                     try:
                         some_type = type(getattr( options, key ))
@@ -55,7 +55,7 @@ class ImReqOptions:
                         setattr(options, key, parsed_value )
                     except Exception as err:
                         _logger.warning( err )
- 
+
         return options
 
 
@@ -107,7 +107,8 @@ class ImRequest:
                     opts = ImReqOptions.parser( some_dict_value )
                     setattr(defs, key, opts )
 
-                elif key == 'size':
+                elif key == 'im_size':
+
                     try:
                         width, height = some_dict_value
                         width = int(width)
@@ -116,7 +117,7 @@ class ImRequest:
 
                     except Exception as err:
                         errs.append(err)
-                   
-                
+
+
 
         return errs, defs

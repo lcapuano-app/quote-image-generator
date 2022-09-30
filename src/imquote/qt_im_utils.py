@@ -30,9 +30,9 @@ class QuoteImUtils:
             _logger.error( err, exc_info=True )
             im_req = ImRequest()
             im_req.errs = [err]
-            return im_req 
+            return im_req
 
-    
+
     @staticmethod
     def send_to_ext_api( filename: str , filepath: str, default_url: str ) -> Result[str, Exception]:
         s_key: str = os.environ['API_SECRET_KEY']
@@ -44,7 +44,7 @@ class QuoteImUtils:
                 from PIL import Image as Im
                 payload={}
                 files=[( 'quote', (filename , im_file, 'image/png') )]
-                headers = { 
+                headers = {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
                 }
                 response = requests.post( url, headers=headers, data=payload, files=files)
@@ -58,7 +58,7 @@ class QuoteImUtils:
                     _logger.warn( f'"{url}"' )
                     im_url: str = f'{EXT_API_OUTPUT_URL}/default.png'
                     return Some(default_url)
-        
+
         except Exception as err:
             _logger.error(err, exc_info=True)
             return Err(err)
@@ -100,12 +100,12 @@ class QuoteImUtils:
     @staticmethod
     def send_to_ext_api_b64( filename: str , filepath: str, default_url: str ):
         (800,600)
-    
+
 
     @staticmethod
     def img_already_exists_ext_api( filename: str ) -> bool:
         url: str = f'{EXT_API_OUTPUT_URL}/{filename}'
-        headers = { 
+        headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
         }
         try:

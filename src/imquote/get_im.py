@@ -21,7 +21,7 @@ class GetQuoteIm:
 
     req_dict: Dict
     im_req: ImRequest
-    
+
     def __init__(self, req_dict: Dict = None ) -> None:
         self.req_dict = req_dict
 
@@ -36,10 +36,10 @@ class GetQuoteIm:
 
 
     def create_and_save( self ) -> Result[Tuple[str, str, ImRequest], Exception]:
-        """" 
+        """"
         Creates an saves a quote image.
 
-        First it will parse de quote request dict to a valid `ImRequest`. 
+        First it will parse de quote request dict to a valid `ImRequest`.
         Then it checks if the image already exisits on external api and local.
         If exists in both it just returns otherwise it will create where is missing (external, local or both)
         :returns `Ok|Some[tuple[filepath, fileurl, ImRequest]] | Err[Exception]`
@@ -57,7 +57,7 @@ class GetQuoteIm:
             return Ok(( filepath, ext_api_im_url, self.im_req ))
 
         elif exists_on_local and not exists_on_api:
-            im_url = QuoteImUtils.send_to_ext_api( 
+            im_url = QuoteImUtils.send_to_ext_api(
                 filename, filepath, fallback_url ).unwrap_or( fallback_url )
             return Ok(( filepath, im_url, self.im_req ))
 
@@ -66,15 +66,15 @@ class GetQuoteIm:
                 case Ok( res_img ): img = res_img
                 case Err(_): img = ImGen( self.im_req ).gen_quote().unwrap_or(None)
 
-        else: 
+        else:
             img = ImGen( self.im_req ).gen_quote().unwrap_or(None)
 
 
         match QuoteImUtils.save_im_as(img, filename, filepath ):
             case Err( _ ):
                 return Some(( None, fallback_url, self.im_req ))
-            case Ok():                
-                im_url = QuoteImUtils.send_to_ext_api( 
+            case Ok():
+                im_url = QuoteImUtils.send_to_ext_api(
                     filename, filepath, fallback_url ).unwrap_or( fallback_url )
                 return Ok(( filepath, im_url, self.im_req ))
 
@@ -88,4 +88,3 @@ class GetQuoteIm:
             _logger.error(err, exc_info=True )
             return f'{self.im_req.quote.quote_id}.jpg'
 
-    
